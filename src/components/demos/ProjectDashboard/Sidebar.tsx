@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Users, Settings, BarChart3, PanelLeft } from 'lucide-react';
+import { LayoutDashboard, Users, Settings, BarChart3, PanelLeft, Rocket } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type NavItemProp = {
@@ -46,6 +46,7 @@ export const Sidebar = () => {
         <div className="space-y-1">
             <NavItem icon={LayoutDashboard} label="Projects" href="/demos/project-dashboard" />
             <NavItem icon={BarChart3} label="Catch-up Status" href="/demos/catch-up" />
+            <NavItem icon={Rocket} label="Onboarding" href="/demos/onboarding" />
         </div>
 
         <div>
