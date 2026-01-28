@@ -85,6 +85,10 @@ export const ProjectDetail = ({ project }: ProjectDetailProps) => {
                              <PropertyRow name="Status" value={project.status} />
                              <PropertyRow name="Lead" value={project.members[0]} />
                              <PropertyRow name="Framework" value={project.tags[0] || "React"} />
+                             
+                             {project.notionUrl && <PropertyRow name="Notion" value={project.notionUrl} />}
+                             {project.slackChannel && <PropertyRow name="Slack" value={project.slackChannel} />}
+                             
                              <PropertyRow name="Repository" value={`github.com/demo/${project.id}`} />
                              <PropertyRow name="Is Public" value="False" type="boolean" />
                              <PropertyRow name="Auto-Deploy" value="True" type="boolean" />

@@ -10,69 +10,81 @@ import { Search, Filter, Plus, Home } from 'lucide-react';
 const MOCK_PROJECTS: Project[] = [
     {
         id: '1',
-        name: 'Project A', // Updated names to match request
-        description: '...',
+        name: 'Project A',
+        description: 'Core infrastructure overhaul.',
         status: 'Active',
-        members: ['Alice', 'Bob', 'Charlie', 'Dave'],
+        members: ['Alice', 'Bob'],
         memberCount: 5,
-        dueDate: '',
+        dueDate: '2024-12-01',
         progress: 0,
-        tags: ['Web']
+        tags: ['Infra'],
+        notionUrl: 'https://notion.so/project-a',
+        slackChannel: '#proj-a-core'
     },
     {
         id: '2',
         name: 'Project B',
-        description: '...',
+        description: 'New mobile app development.',
         status: 'Active',
-        members: ['Eve', 'Frank'],
+        members: ['Eve'],
         memberCount: 2,
-        dueDate: '',
+        dueDate: '2025-01-15',
         progress: 0,
-        tags: ['Mobile']
+        tags: ['Mobile'],
+        notionUrl: 'https://notion.so/project-b',
+        slackChannel: '#proj-b-app'
     },
     {
         id: '3',
         name: 'Project C',
-        description: '...',
+        description: 'Marketing campaign Q4.',
         status: 'Planning',
-        members: ['Grace', 'Heidi', 'Ivan'],
+        members: ['Grace', 'Ivan'],
         memberCount: 3,
-        dueDate: '',
+        dueDate: '2024-11-20',
         progress: 0,
-        tags: ['Marketing']
+        tags: ['Marketing'],
+        notionUrl: 'https://notion.so/project-c',
+        slackChannel: '#proj-c-marketing'
     },
     {
         id: '4',
         name: 'Project D',
-        description: '...',
+        description: 'Internal security audit.',
         status: 'Active',
         members: ['Judy'],
         memberCount: 1,
-        dueDate: '',
+        dueDate: '2024-10-30',
         progress: 0,
-        tags: ['Internal']
+        tags: ['Security'],
+        notionUrl: 'https://notion.so/project-d',
+        slackChannel: '#proj-d-audit'
     },
     {
         id: '5',
         name: 'Project E',
-        description: '...',
+        description: 'Backend migration.',
         status: 'Active',
-        members: ['Kyle', 'Leo', 'Mia', 'Nina'],
+        members: ['Kyle', 'Leo'],
         memberCount: 8,
-        dueDate: '',
+        dueDate: '2025-03-01',
         progress: 0,
-        tags: ['Backend']
+        tags: ['Backend'],
+        notionUrl: 'https://notion.so/project-e',
+        slackChannel: '#proj-e-backend'
     },
     {
         id: '6',
         name: 'Project F',
-        description: '...',
+        description: 'Data analysis pipeline.',
         status: 'Completed',
-        members: ['Oscar', 'Paul'],
+        members: ['Oscar'],
         memberCount: 4,
-        dueDate: '',
+        dueDate: '2024-09-01',
         progress: 0,
-        tags: ['Analytic']
+        tags: ['Data'],
+        notionUrl: 'https://notion.so/project-f',
+        slackChannel: '#proj-f-data'
     }
 ];
 
@@ -82,16 +94,22 @@ export const DashboardContainer = () => {
     return (
         <DashboardLayout>
             <div className="flex flex-col h-full overflow-hidden bg-slate-50">
-                {/* Top Section: Project Grid */}
-                <div className="flex-1 overflow-y-auto p-12 bg-white">
-                    {/* Header - Simple Title */}
-                    <div className="flex items-center mb-10 pb-4 border-b border-slate-100">
-                        <Home className="w-5 h-5 text-slate-400 mr-2" />
-                        <h1 className="text-xl font-bold text-slate-800 tracking-tight">Project Management Dashboard</h1>
-                    </div>
+                {/* Header Section */}
+                <div className="flex-none p-8 bg-white border-b border-slate-200">
+                     <div className="flex justify-between items-center mb-6">
+                        <div className="flex items-center">
+                            <Home className="w-6 h-6 text-blue-600 mr-3" />
+                            <div>
+                                <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Project Dashboard</h1>
+                                <p className="text-slate-500 text-sm">Manage and track your ongoing initiatives.</p>
+                            </div>
+                        </div>
+                     </div>
+                </div>
 
-                    {/* Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20 max-w-6xl mx-auto">
+                {/* Main Content - Grid View */}
+                <div className="flex-1 overflow-y-auto p-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pb-20 max-w-6xl mx-auto animate-in fade-in duration-500">
                         {MOCK_PROJECTS.map((project) => (
                             <ProjectCard 
                                 key={project.id} 
@@ -103,8 +121,8 @@ export const DashboardContainer = () => {
                     </div>
                 </div>
 
-                {/* Bottom Section: Details Panel */}
-                <div className="h-[350px] border-t border-slate-200 bg-white overflow-hidden shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] z-10 relative">
+                {/* Details Panel */}
+                <div className="h-[350px] border-t border-slate-200 bg-white overflow-hidden shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] z-10 relative flex-none">
                     {selectedProject ? (
                         <ProjectDetail project={selectedProject} />
                     ) : (

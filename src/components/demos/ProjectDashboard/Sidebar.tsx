@@ -1,26 +1,34 @@
 import React from 'react';
-import { LayoutDashboard, Users, Settings, FolderKanban, BarChart3, Bell, Search, PanelLeft } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { LayoutDashboard, Users, Settings, BarChart3, PanelLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type NavItemProp = {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
-  active?: boolean;
+  href: string;
 };
 
-const NavItem = ({ icon: Icon, label, active }: NavItemProp) => (
-  <button
-    className={cn(
-      "flex items-center w-full px-3 py-2 text-sm transition-colors rounded-md group",
-      active
-        ? "bg-blue-50 text-blue-600 font-medium"
-        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-    )}
-  >
-    <Icon className={cn("w-4 h-4 mr-3", active ? "text-blue-600" : "text-slate-400 group-hover:text-slate-500")} />
-    {label}
-  </button>
-);
+const NavItem = ({ icon: Icon, label, href }: NavItemProp) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+  
+  return (
+    <Link
+      href={href}
+      className={cn(
+        "flex items-center w-full px-3 py-2 text-sm transition-colors rounded-md group",
+        isActive
+          ? "bg-blue-50 text-blue-600 font-medium"
+          : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+      )}
+    >
+      <Icon className={cn("w-4 h-4 mr-3", isActive ? "text-blue-600" : "text-slate-400 group-hover:text-slate-500")} />
+      {label}
+    </Link>
+  );
+};
 
 export const Sidebar = () => {
   return (
@@ -36,9 +44,8 @@ export const Sidebar = () => {
       {/* Content */}
       <div className="flex-1 px-3 py-4 space-y-6 overflow-y-auto">
         <div className="space-y-1">
-            <NavItem icon={LayoutDashboard} label="Overview" active />
-            <NavItem icon={FolderKanban} label="All Projects" />
-            <NavItem icon={Users} label="Team Members" />
+            <NavItem icon={LayoutDashboard} label="Projects" href="/demos/project-dashboard" />
+            <NavItem icon={BarChart3} label="Catch-up Status" href="/demos/catch-up" />
         </div>
 
         <div>
@@ -46,12 +53,15 @@ export const Sidebar = () => {
                 Workspace
             </div>
             <div className="space-y-1">
-                <NavItem icon={PanelLeft} label="Views" />
-                <NavItem icon={BarChart3} label="Analytics" />
-                <NavItem icon={Settings} label="Configuration" />
+                <NavItem icon={Users} label="Team Members" href="#" />
+                <NavItem icon={Settings} label="Configuration" href="#" />
+                <NavItem icon={PanelLeft} label="Views" href="#" />
+                <NavItem icon={BarChart3} label="Analytics" href="#" />
+
             </div>
         </div>
       </div>
+
 
       {/* Footer */}
       <div className="p-3 border-t border-slate-100 bg-slate-50/50">
