@@ -15,7 +15,10 @@ export const ProjectCard = ({ project, onClick, isSelected }: ProjectCardProps) 
     <motion.div 
       layoutId={`project-${project.id}`}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      onClick={() => onClick(project)}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick(project);
+      }}
       className={cn(
         "cursor-pointer group relative flex flex-col items-center justify-center p-8 bg-white rounded-2xl border transition-all duration-300 min-h-[220px]",
         isSelected 

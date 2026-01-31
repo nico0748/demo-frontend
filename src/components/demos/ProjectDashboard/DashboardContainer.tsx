@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { DashboardLayout } from './DashboardLayout';
 import { ProjectCard } from './ProjectCard';
 import { ProjectDetail } from './ProjectDetail';
@@ -93,7 +94,10 @@ export const DashboardContainer = () => {
 
     return (
         <DashboardLayout>
-            <div className="flex flex-col h-full overflow-hidden bg-slate-50">
+            <div 
+                className="relative flex flex-col h-full overflow-hidden bg-slate-50"
+                onClick={() => setSelectedProject(null)}
+            >
                 {/* Header Section */}
                 <div className="flex-none p-8 bg-white border-b border-slate-200">
                      <div className="flex justify-between items-center mb-6">
@@ -121,19 +125,21 @@ export const DashboardContainer = () => {
                     </div>
                 </div>
 
-                {/* Details Panel */}
-                <div className="h-[350px] border-t border-slate-200 bg-white overflow-hidden shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] z-10 relative flex-none">
-                    {selectedProject ? (
-                        <ProjectDetail project={selectedProject} />
-                    ) : (
-                        <div className="flex flex-col items-center justify-center h-full text-slate-300">
-                            <div className="w-16 h-16 rounded-xl bg-slate-50 flex items-center justify-center mb-4">
-                                <Search className="w-8 h-8 text-slate-300" />
-                            </div>
-                            <p className="font-medium">Select a project to view properties</p>
-                        </div>
+                {/* Details Panel - Slide In */}
+                <AnimatePresence>
+                    {selectedProject && (
+                        <motion.div
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "100%" }}
+                            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                            className="absolute bottom-0 left-0 right-0 h-[350px] border-t border-slate-200 bg-white overflow-hidden shadow-[0_-4px_20px_-5px_rgba(0,0,0,0.1)] z-20"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <ProjectDetail project={selectedProject} />
+                        </motion.div>
                     )}
-                </div>
+                </AnimatePresence>
             </div>
         </DashboardLayout>
     );
